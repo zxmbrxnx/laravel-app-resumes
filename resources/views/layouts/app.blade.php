@@ -23,66 +23,92 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md sticky-top navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ 'Zxmbrxnx', config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown float-right">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
+        <div class="wrapper">
+            <!-- Sidebar  -->
+            <nav id="sidebar">
+                <div class="sidebar-header text-center">
+                    <h3>Zxmbrxnx</h3>
                 </div>
-            </div>
-        </nav>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
+                <ul class="list-unstyled components">
+                    <li class="active">
+                        <a href="#"><i class="fas fa-chart-pie mr-2"></i> Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="#resumeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+
+                            Resumes
+                        </a>
+                        <ul class="collapse list-unstyled" id="resumeSubmenu">
+                            <li>
+                                <a href="/resumes/create" class="pl-5"><i class="fas fa-plus"></i> Create resume</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Page Content  -->
+            <div id="content">
+
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="container-fluid">
+                        <div class="cf">
+                            <div class="three" onclick="$('.hamburger').toggleClass('is-active'); $('#sidebar').toggleClass('active');">
+                                <div class="hamburger is-active" id="hamburger-6">
+                                    <span class="line"></span>
+                                    <span class="line"></span>
+                                    <span class="line"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="user-menu-wrap float-right">
+
+                            <a class="mini-photo-wrapper" href="#"
+                                onclick="document.querySelector('.menu-container').classList.toggle('active');">
+                                {{ Auth::user()->name }}
+                                <b-avatar variant="primary"></b-avatar>
+                            </a>
+                            <div class="menu-container">
+                                <ul class="user-menu">
+                                    <div class="profile-highlight">
+                                        <b-avatar variant="primary"></b-avatar>
+                                        <div class="details">
+                                            <div id="profile-name">{{ Auth::user()->name }}</div>
+                                            <div id="profile-footer">{{ Auth::user()->email }}</div>
+                                        </div>
+                                    </div>
+                                    <li class="user-menu__item">
+                                        <a class="user-menu-link" href="#">
+                                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1604623/book.png"
+                                                alt="team_icon" width=20 height=20>
+                                            <div>Log History</div>
+                                        </a>
+                                    </li>
+                                    <div class="footer">
+                                        <li class="user-menu__item">
+                                            <a class="user-menu-link" style="color: #F44336;"
+                                                href="{{ route('logout') }}"
+                                                onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
+                                                {{ __('Logout') }} </a>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                                class="d-none">
+                                                @csrf
+                                            </form>
+                                        </li>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+                <main class="py-4">
+                    @yield('content')
+                </main>
+            </div>
+        </div>
     </div>
 </body>
 

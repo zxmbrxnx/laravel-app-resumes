@@ -9,7 +9,7 @@ export default {
           inputType: 'text',
           label: 'Direccion',
           placeholder: 'Escriba su direccion...',
-          model: 'adress',
+          model: 'address',
           required: true,
           styleClasses: ['col-md-6', 'p-0', 'pr-md-1'],
         },

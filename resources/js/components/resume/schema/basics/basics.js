@@ -61,7 +61,7 @@ export default {
           label: 'Sitio web',
           placeholder: 'https://www.yoursite.com',
           validator: 'url',
-          model: 'url',
+          model: 'website',
           styleClasses: ['col-md-12', 'p-0', 'pr-md-1'],
         },
         //summary

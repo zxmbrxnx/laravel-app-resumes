@@ -26,7 +26,7 @@
         <DynamicForm
           title="Empresa"
           :model="resume.content"
-          self="work"
+          self="education"
           :schema="schemas.education"
           :subforms="subforms.education"
         />
@@ -41,7 +41,7 @@
           :subforms="subforms.work"
         />
       </Tab>
-      <Tab title="Redes sociales" icon="fas fa-hashtag">
+      <Tab title="Redes sociales" icon="fas fa-globe">
         <h3>Redes sociales</h3>
         <DynamicForm
           title="Profile"
@@ -50,24 +50,48 @@
           :schema="schemas.profile"
         />
       </Tab>
+      <Tab title="Reconocimientos" icon="fas fa-award">
+        <h3>Premios</h3>
+        <DynamicForm
+          title="Awards"
+          :model="resume.content"
+          self="awards"
+          :schema="schemas.awards"
+        />
+      </Tab>
+      <Tab title="Skills" icon="fas fa-lightbulb">
+        <h3>Skills</h3>
+        <DynamicForm
+          title="Skills"
+          :model="resume.content"
+          self="skills"
+          :schema="schemas.skills"
+          :subforms="subforms.skills"
+        />
+      </Tab>
     </Tabs>
   </div>
 </template>
 
 <script>
-import Tabs from './tabs/Tabs.vue';
-import Tab from './tabs/Tab.vue';
-import FieldResumeImage from './vfg/FieldResumeImage.vue';
-import DynamicForm from './dynamic/DynamicForm.vue';
-import ListForm from './dynamic/ListForm.vue';
-import TagsForm from './dynamic/TagsForm.vue';
-
+//Schemas
+import jsonresume from './jsonresume';
 import basics from './schema/basics/basics';
 import location from './schema/basics/location';
 import photo from './schema/basics/photo';
 import profile from './schema/basics/profile';
 import work from './schema/work';
 import education from './schema/education';
+import skills from './schema/skills';
+import awards from './schema/awards';
+
+//Components
+import Tabs from './tabs/Tabs.vue';
+import Tab from './tabs/Tab.vue';
+import FieldResumeImage from './vfg/FieldResumeImage.vue';
+import DynamicForm from './dynamic/DynamicForm.vue';
+import ListForm from './dynamic/ListForm.vue';
+import TagsForm from './dynamic/TagsForm.vue';
 
 import { component as VueFormGenerator } from 'vue-form-generator';
 import 'vue-form-generator/dist/vfg.css';
@@ -85,16 +109,20 @@ export default {
     TagsForm,
   },
 
+  props: {
+    update: false,
+    resume: {
+        type: Object,
+        default: () => ({
+            id: null,
+            title: 'Resume title',
+            content: jsonresume,
+        })
+    }
+  },
+
   data() {
     return {
-      resume: {
-        title: '',
-        content: {
-          basics: {
-            location: {},
-          },
-        },
-      },
       schemas: {
         basics,
         location,
@@ -102,6 +130,8 @@ export default {
         profile,
         work,
         education,
+        skills,
+        awards,
       },
 
       subforms: {
@@ -119,7 +149,16 @@ export default {
             component: TagsForm,
             props: {
               title: 'Cursos adquiridos',
-              self: 'education',
+              self: 'courses',
+            },
+          },
+        ],
+        skills: [
+          {
+            component: TagsForm,
+            props: {
+              title: 'Skills',
+              self: 'keywords',
             },
           },
         ],

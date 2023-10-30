@@ -24,7 +24,7 @@ export default {
       inputType: 'text',
       label: 'Sitio web',
       placeholder: 'https://nexura.com',
-      model: 'url',
+      model: 'website',
       validator: 'url',
       styleClasses: ['col-md-4', 'p-0', 'pr-md-1'],
     },
