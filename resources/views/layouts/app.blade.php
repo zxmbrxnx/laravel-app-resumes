@@ -50,57 +50,67 @@
             </nav>
 
             <!-- Page Content  -->
-            <div id="content">
+            <div id="content" class="active">
 
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
                     <div class="container-fluid">
-                        <div class="cf">
-                            <div class="three" onclick="$('.hamburger').toggleClass('is-active'); $('#sidebar').toggleClass('active');">
-                                <div class="hamburger is-active" id="hamburger-6">
-                                    <span class="line"></span>
-                                    <span class="line"></span>
-                                    <span class="line"></span>
-                                </div>
-                            </div>
+                        <div id="nav-icon3" class="open" onclick="$('#nav-icon3').toggleClass('open'); $('#sidebar, #content').toggleClass('active');">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
                         </div>
                         <div class="user-menu-wrap float-right">
-
-                            <a class="mini-photo-wrapper" href="#"
-                                onclick="document.querySelector('.menu-container').classList.toggle('active');">
-                                {{ Auth::user()->name }}
-                                <b-avatar variant="primary"></b-avatar>
-                            </a>
-                            <div class="menu-container">
-                                <ul class="user-menu">
-                                    <div class="profile-highlight">
-                                        <b-avatar variant="primary"></b-avatar>
-                                        <div class="details">
-                                            <div id="profile-name">{{ Auth::user()->name }}</div>
-                                            <div id="profile-footer">{{ Auth::user()->email }}</div>
-                                        </div>
-                                    </div>
-                                    <li class="user-menu__item">
-                                        <a class="user-menu-link" href="#">
-                                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1604623/book.png"
-                                                alt="team_icon" width=20 height=20>
-                                            <div>Log History</div>
-                                        </a>
+                            @guest
+                                @if (Route::has('login'))
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                                     </li>
-                                    <div class="footer">
+                                @endif
+
+                                @if (Route::has('register'))
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    </li>
+                                @endif
+                            @else
+                                <a class="mini-photo-wrapper" href="#"
+                                    onclick="document.querySelector('.menu-container').classList.toggle('active');">
+                                    {{ Auth::user()->name }}
+                                    <b-avatar variant="primary"></b-avatar>
+                                </a>
+                                <div class="menu-container">
+                                    <ul class="user-menu">
+                                        <div class="profile-highlight">
+                                            <b-avatar variant="primary"></b-avatar>
+                                            <div class="details">
+                                                <div id="profile-name">{{ Auth::user()->name }}</div>
+                                                <div id="profile-footer">{{ Auth::user()->email }}</div>
+                                            </div>
+                                        </div>
                                         <li class="user-menu__item">
-                                            <a class="user-menu-link" style="color: #F44336;"
-                                                href="{{ route('logout') }}"
-                                                onclick="event.preventDefault();
-                                                document.getElementById('logout-form').submit();">
-                                                {{ __('Logout') }} </a>
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                                class="d-none">
-                                                @csrf
-                                            </form>
+                                            <a class="user-menu-link" href="#">
+                                                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1604623/book.png"
+                                                    alt="team_icon" width=20 height=20>
+                                                <div>Log History</div>
+                                            </a>
                                         </li>
-                                    </div>
-                                </ul>
-                            </div>
+                                        <div class="footer">
+                                            <li class="user-menu__item">
+                                                <a class="user-menu-link" style="color: #F44336;"
+                                                    href="{{ route('logout') }}"
+                                                    onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();">
+                                                    {{ __('Logout') }} </a>
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                                    class="d-none">
+                                                    @csrf
+                                                </form>
+                                            </li>
+                                        </div>
+                                    </ul>
+                                </div>
+                            @endguest
                         </div>
                     </div>
                 </nav>
